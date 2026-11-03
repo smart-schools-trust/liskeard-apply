@@ -1,0 +1,2526 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liskeard Sixth Form — Application Form</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN TOKENS & RESET
+═══════════════════════════════════════════ */
+:root {
+  /* Liskeard Sixth Form palette — brand blue #08517e + gold #deb406 */
+  --navy:       #08517E;   /* Liskeard blue — header, labels, headings */
+  --navy-deep:  #053A5B;   /* darkest blue */
+  --blue:       #0A67A0;   /* lighter brand blue — progress strip, primary */
+  --sky:        #2F8FCB;   /* mid blue — focus, hover */
+  --sky-light:  #E4EFF7;   /* blue tint — info boxes, selected */
+  --cream:      #F5F8FB;
+  --warm-white: #FFFFFF;
+  --slate:      #4A5568;
+  --mist:       #E6EDF3;
+  --green:      #DEB406;   /* Liskeard gold */
+  --yellow:     #DEB406;   /* Liskeard gold */
+  --logo-grad:  linear-gradient(90deg, #DEB406 0%, #F0D25A 100%);
+  --success:    #2D8C5E;
+  --warning:    #C17D0E;
+  --warn-bg:    #FEF9EC;
+  --warn-border:#E9B44C;
+  --error:      #C0392B;
+  --radius:     10px;
+  --radius-lg:  16px;
+  --shadow:     0 2px 16px rgba(8,81,126,0.10);
+  --shadow-lg:  0 8px 40px rgba(8,81,126,0.16);
+  --transition: 0.28s cubic-bezier(0.4,0,0.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: var(--cream);
+  color: #1a1a2e;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   HEADER
+═══════════════════════════════════════════ */
+.site-header {
+  background: var(--navy);
+  border-bottom: 4px solid transparent;
+  border-image: var(--logo-grad) 1;
+  padding: 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 20px rgba(8,81,126,0.12);
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-logo-img {
+  height: 64px;
+  width: auto;
+  display: block;
+}
+
+.header-text h1 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.header-text p {
+  font-size: 0.8rem;
+  color: #fff;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+═══════════════════════════════════════════ */
+.progress-wrap {
+  background: var(--blue);
+  padding: 14px 24px;
+}
+
+.progress-inner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.progress-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.progress-labels span {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255,255,255,0.72);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition: color var(--transition);
+}
+
+.progress-labels span.active { color: #fff; font-weight: 700; }
+.progress-labels span.done   { color: rgba(255,255,255,0.9); }
+
+.progress-track {
+  height: 4px;
+  background: rgba(255,255,255,0.28);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--yellow) 0%, #F0D25A 100%);
+  border-radius: 99px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+}
+
+/* ═══════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════ */
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 24px 80px;
+}
+
+/* ═══════════════════════════════════════════
+   FORM STEPS
+═══════════════════════════════════════════ */
+.step {
+  display: none;
+  animation: stepIn 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+
+.step.active { display: block; }
+
+@keyframes stepIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION CARDS
+═══════════════════════════════════════════ */
+.section-card {
+  background: var(--warm-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  overflow: hidden;
+}
+
+.section-header {
+  background: linear-gradient(135deg, var(--navy) 0%, #0A67A0 100%);
+  border-bottom: 3px solid var(--yellow);
+  padding: 22px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.section-num {
+  width: 36px;
+  height: 36px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.section-title-group h2 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.section-title-group p {
+  font-size: 0.83rem;
+  color: rgba(255,255,255,0.85);
+  margin-top: 4px;
+  font-weight: 300;
+}
+
+.section-body {
+  padding: 28px;
+}
+
+/* ═══════════════════════════════════════════
+   FIELD GROUPS
+═══════════════════════════════════════════ */
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.field-row.single { grid-template-columns: 1fr; }
+.field-row.triple { grid-template-columns: 1fr 1fr 1fr; }
+
+@media (max-width: 600px) {
+  .field-row, .field-row.triple { grid-template-columns: 1fr; }
+  .progress-labels span { font-size: 0.6rem; letter-spacing: 0.02em; }
+  .header-logo-img { height: 52px; }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--navy);
+  letter-spacing: 0.01em;
+}
+
+label .req {
+  color: var(--error);
+  margin-left: 3px;
+}
+
+label .opt {
+  font-weight: 300;
+  color: var(--slate);
+  font-size: 0.78rem;
+  margin-left: 4px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="month"],
+input[type="number"],
+select,
+textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1.5px solid #CFDCE6;
+  border-radius: var(--radius);
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 0.92rem;
+  color: #1a1a2e;
+  background: #fff;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%2304625B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 38px;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 3px rgba(47,143,203,0.20);
+}
+
+input.error, select.error, textarea.error {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(192,57,43,0.12);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.hint {
+  font-size: 0.76rem;
+  color: var(--slate);
+  margin-top: 2px;
+  font-style: italic;
+}
+
+.error-msg {
+  font-size: 0.76rem;
+  color: var(--error);
+  margin-top: 2px;
+  display: none;
+}
+
+.field.has-error .error-msg { display: block; }
+
+/* ═══════════════════════════════════════════
+   RADIO / CHECKBOX GROUPS
+═══════════════════════════════════════════ */
+.radio-group, .check-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radio-group.inline, .check-group.inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.radio-item, .check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  padding: 10px 14px;
+  border: 1.5px solid #CFDCE6;
+  border-radius: var(--radius);
+  background: #fff;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.radio-item:hover, .check-item:hover {
+  border-color: var(--sky);
+  background: var(--sky-light);
+}
+
+.radio-item input, .check-item input { display: none; }
+
+.radio-item.selected, .check-item.selected {
+  border-color: var(--blue);
+  background: var(--sky-light);
+}
+
+.radio-dot, .check-box {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #CFDCE6;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.check-box { border-radius: 4px; }
+
+.radio-item.selected .radio-dot {
+  border-color: var(--blue);
+  background: var(--blue);
+  box-shadow: inset 0 0 0 3px #fff;
+}
+
+.check-item.selected .check-box {
+  border-color: var(--blue);
+  background: var(--blue);
+}
+
+.check-item.selected .check-box::after {
+  content: '';
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid #fff;
+  border-bottom: 2px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+
+.radio-label, .check-label {
+  font-size: 0.88rem;
+  color: #1a1a2e;
+  line-height: 1.4;
+}
+
+.radio-label small, .check-label small {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--slate);
+  font-weight: 300;
+  margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════
+   CONDITIONAL REVEAL BLOCKS
+═══════════════════════════════════════════ */
+.reveal-block {
+  display: none;
+  margin-top: 14px;
+  padding: 18px 20px;
+  background: var(--sky-light);
+  border-left: 3px solid var(--blue);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  animation: revealIn 0.25s ease;
+}
+
+.reveal-block.visible { display: block; }
+
+@keyframes revealIn {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ═══════════════════════════════════════════
+   ENTRY REQUIREMENT ALERTS
+═══════════════════════════════════════════ */
+.entry-req {
+  display: none;
+  margin-top: 10px;
+  padding: 12px 16px;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: var(--radius);
+  font-size: 0.82rem;
+  color: #5a3e00;
+  animation: revealIn 0.25s ease;
+}
+
+.entry-req.visible { display: flex; gap: 10px; align-items: flex-start; }
+
+.entry-req .icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.entry-req strong {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 2px;
+  color: #3d2900;
+}
+
+/* ═══════════════════════════════════════════
+   INFO / NOTE BOXES
+═══════════════════════════════════════════ */
+.info-box {
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--sky-light);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  font-size: 0.83rem;
+  color: var(--navy);
+  line-height: 1.5;
+}
+
+.info-box .icon { font-size: 1.1rem; flex-shrink: 0; }
+
+.warn-box {
+  display: flex;
+  gap: 12px;
+  padding: 14px 18px;
+  background: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: var(--radius);
+  margin: 14px 0;
+  font-size: 0.83rem;
+  color: #5a3e00;
+}
+
+/* ═══════════════════════════════════════════
+   GCSE TABLE
+═══════════════════════════════════════════ */
+.gcse-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 6px;
+}
+
+.gcse-table thead th {
+  text-align: left;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--slate);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 8px 4px;
+}
+
+.gcse-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.gcse-row input, .gcse-row select {
+  margin-bottom: 0;
+}
+
+.gcse-row .remove-row {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: none;
+  color: #ccc;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition), background var(--transition);
+  flex-shrink: 0;
+}
+
+.gcse-row .remove-row:hover {
+  color: var(--error);
+  background: rgba(192,57,43,0.08);
+}
+
+.add-row-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: 1.5px dashed var(--blue);
+  color: var(--blue);
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background var(--transition), border-color var(--transition);
+  margin-top: 4px;
+}
+
+.add-row-btn:hover {
+  background: var(--sky-light);
+  border-color: var(--sky);
+}
+
+/* ═══════════════════════════════════════════
+   DIVIDER
+═══════════════════════════════════════════ */
+.divider {
+  height: 1px;
+  background: var(--mist);
+  margin: 24px 0;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION BUTTONS
+═══════════════════════════════════════════ */
+.nav-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 0 0;
+  gap: 12px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 28px;
+  border-radius: var(--radius);
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+  letter-spacing: 0.01em;
+}
+
+.btn:active { transform: translateY(1px); }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--navy) 0%, #0A67A0 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(8,81,126,0.25);
+}
+
+.btn-primary:hover {
+  box-shadow: 0 6px 24px rgba(8,81,126,0.35);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: transparent;
+  color: var(--navy);
+  border: 1.5px solid #CFDCE6;
+}
+
+.btn-secondary:hover {
+  background: var(--mist);
+  border-color: var(--blue);
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, #08517E 0%, var(--blue) 100%);
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(10,103,160,0.35);
+  padding: 15px 36px;
+  font-size: 1rem;
+}
+
+.btn-submit:hover {
+  box-shadow: 0 6px 24px rgba(10,103,160,0.45);
+  transform: translateY(-1px);
+}
+
+/* ═══════════════════════════════════════════
+   DECLARATION CHECKBOX
+═══════════════════════════════════════════ */
+.declaration {
+  display: flex;
+  gap: 14px;
+  padding: 18px;
+  background: var(--mist);
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.declaration.checked {
+  border-color: var(--success);
+  background: var(--sky-light);
+}
+
+.declaration input { display: none; }
+
+.decl-box {
+  width: 22px;
+  height: 22px;
+  border: 2px solid #CFDCE6;
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transition);
+  margin-top: 1px;
+}
+
+.declaration.checked .decl-box {
+  background: var(--success);
+  border-color: var(--success);
+}
+
+.declaration.checked .decl-box::after {
+  content: '';
+  width: 11px;
+  height: 6px;
+  border-left: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(-45deg) translateY(-1px);
+  display: block;
+}
+
+.decl-text {
+  font-size: 0.88rem;
+  color: #1a1a2e;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════
+   SUCCESS SCREEN
+═══════════════════════════════════════════ */
+.success-screen {
+  display: none;
+  text-align: center;
+  padding: 60px 32px;
+}
+
+.success-screen.visible { display: block; }
+
+.success-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 24px;
+  animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.success-icon svg { width: 40px; height: 40px; stroke: #fff; }
+
+.success-screen h2 {
+  font-family: 'Poppins', system-ui, sans-serif;
+  font-size: 2rem;
+  color: var(--navy);
+  margin-bottom: 12px;
+}
+
+.success-screen p {
+  color: var(--slate);
+  max-width: 500px;
+  margin: 0 auto 8px;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.success-next {
+  background: var(--sky-light);
+  border-radius: var(--radius-lg);
+  padding: 24px 28px;
+  margin: 28px auto 0;
+  max-width: 500px;
+  text-align: left;
+}
+
+.success-next h3 {
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.success-next ol {
+  padding-left: 20px;
+  font-size: 0.88rem;
+  color: var(--slate);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════
+   SECTION LABEL
+═══════════════════════════════════════════ */
+.sub-heading {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin: 24px 0 12px;
+  padding-bottom: 6px;
+  border-bottom: 2px solid var(--mist);
+  border-image: linear-gradient(90deg, var(--blue) 0%, var(--blue) 60px, var(--mist) 60px) 1;
+}
+
+/* ═══════════════════════════════════════════
+   STEP COUNTER
+═══════════════════════════════════════════ */
+.step-counter {
+  font-size: 0.78rem;
+  color: var(--slate);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   GDPR NOTE
+═══════════════════════════════════════════ */
+.gdpr-box {
+  border: 1px solid #CFDCE6;
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  font-size: 0.82rem;
+  color: var(--slate);
+  line-height: 1.6;
+  background: var(--warm-white);
+  margin-bottom: 20px;
+}
+
+.gdpr-box strong { color: var(--navy); }
+
+
+/* ═══════════════════════════════════════════
+   PHOTO / IMAGE CONSENT
+═══════════════════════════════════════════ */
+.consent-intro {
+  font-size: 0.85rem;
+  color: var(--slate);
+  margin-bottom: 14px;
+  line-height: 1.55;
+}
+#photoConsentError { display: none; }
+
+/* ═══════════════════════════════════════════
+   LEGAL FOOTER
+═══════════════════════════════════════════ */
+.site-footer {
+  border-top: 4px solid transparent;
+  border-image: var(--logo-grad) 1;
+  background: #fff;
+  padding: 18px 24px;
+}
+.site-footer p {
+  max-width: 900px;
+  margin: 0 auto;
+  font-size: 0.7rem;
+  color: var(--slate);
+  line-height: 1.5;
+  text-align: center;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* ═══════════════════════════════════════════
+   ADDITIONS — two-form version
+═══════════════════════════════════════════ */
+[hidden] { display: none !important; }
+.is-hidden { display: none !important; }
+
+/* Keyboard-accessible custom radios/checkboxes */
+.radio-item input, .check-item input {
+  display: block;
+  position: absolute;
+  opacity: 0;
+  width: 1px; height: 1px;
+  pointer-events: none;
+}
+.radio-item, .check-item { position: relative; }
+.radio-item:has(input:focus-visible),
+.check-item:has(input:focus-visible),
+.rank-item:focus-visible,
+.chooser-card:focus-visible,
+.btn:focus-visible,
+.add-row-btn:focus-visible,
+.link-btn:focus-visible {
+  outline: 3px solid var(--sky);
+  outline-offset: 2px;
+}
+
+.field.has-error .radio-item,
+.field.has-error .check-item { border-color: var(--error); }
+
+/* Preview banner */
+.preview-banner {
+  background: var(--warn-bg);
+  border-bottom: 1px solid var(--warn-border);
+  color: #5a3e00;
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 8px 24px;
+}
+
+/* ── Form chooser ─────────────────────────── */
+.chooser-intro {
+  text-align: center;
+  margin: 12px auto 28px;
+  max-width: 560px;
+}
+.chooser-intro h2 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.25;
+  margin-bottom: 8px;
+}
+.chooser-intro p { color: var(--slate); font-size: 0.95rem; }
+
+.chooser {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+@media (max-width: 680px) { .chooser { grid-template-columns: 1fr; } }
+
+.chooser-card {
+  text-align: left;
+  font-family: inherit;
+  background: #fff;
+  border: 2px solid transparent;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: border-color var(--transition), box-shadow var(--transition), transform var(--transition);
+}
+.chooser-card:hover {
+  border-color: var(--blue);
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
+}
+.chooser-card .cc-band { height: 8px; }
+.chooser-card.internal .cc-band { background: var(--logo-grad); }
+.chooser-card.external .cc-band { background: linear-gradient(90deg, var(--navy), var(--sky)); }
+.chooser-card .cc-body { padding: 26px 26px 22px; flex: 1; display: flex; flex-direction: column; }
+.chooser-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+.chooser-card p { font-size: 0.86rem; color: var(--slate); line-height: 1.55; }
+.chooser-card .cc-meta {
+  margin-top: auto;
+  padding-top: 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  color: var(--slate);
+}
+.chooser-card .cc-go {
+  font-weight: 600;
+  color: var(--blue);
+  font-size: 0.9rem;
+}
+
+/* ── Contacts ─────────────────────────────── */
+.contact-block {
+  border: 1.5px solid #CFDCE6;
+  border-radius: var(--radius-lg);
+  padding: 22px 22px 6px;
+  margin-bottom: 20px;
+  background: #fff;
+}
+.contact-block-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.contact-block-head h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.contact-block-head .tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--navy);
+  background: var(--sky-light);
+  padding: 3px 10px;
+  border-radius: 99px;
+}
+.field-row.title-row { grid-template-columns: 120px 1fr 1fr; }
+@media (max-width: 600px) { .field-row.title-row { grid-template-columns: 1fr; } }
+
+.link-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--error);
+  cursor: pointer;
+  padding: 4px 6px;
+  border-radius: 6px;
+}
+.link-btn.plain { color: var(--navy); }
+.link-btn:hover { text-decoration: underline; }
+
+input[type="file"] {
+  font-family: inherit;
+  font-size: 0.85rem;
+  padding: 10px;
+  border: 1.5px dashed #CFDCE6;
+  border-radius: var(--radius);
+  background: #fff;
+  width: 100%;
+}
+
+/* ── Question blocks (consents) ───────────── */
+.question {
+  padding: 16px 0;
+  border-bottom: 1px solid var(--mist);
+}
+.question:last-child { border-bottom: none; }
+.question > .q-text {
+  font-size: 0.88rem;
+  color: #1a1a2e;
+  margin-bottom: 10px;
+  line-height: 1.55;
+}
+.question > .q-text strong { color: var(--navy); font-weight: 600; }
+.question a, .gdpr-box a, .info-box a { color: var(--navy); font-weight: 600; }
+
+.statement-list {
+  margin: 4px 0 12px 20px;
+  font-size: 0.86rem;
+  color: #1a1a2e;
+  line-height: 1.6;
+}
+
+/* ── Rank list ────────────────────────────── */
+.rank-list { display: grid; gap: 8px; }
+.rank-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: #1a1a2e;
+  padding: 12px 14px;
+  background: #fff;
+  border: 1.5px solid #CFDCE6;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+.rank-item:hover { border-color: var(--sky); background: var(--sky-light); }
+.rank-num {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px dashed #CFDCE6;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  color: #fff;
+}
+.rank-item.ranked { border-color: var(--blue); background: var(--sky-light); }
+.rank-item.ranked .rank-num { border: none; background: var(--blue); }
+.rank-tools { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; }
+.field.has-error .rank-item:not(.ranked) { border-color: var(--error); }
+
+.check-label { font-weight: 400; }
+
+@media (max-width: 600px) {
+  .progress-labels { justify-content: center; }
+  .progress-labels span:not(.active) { display: none; }
+  .progress-labels span.active { font-size: 0.75rem; }
+}
+
+/* ── Submit error ─────────────────────────── */
+.submit-error {
+  display: none;
+  margin-top: 16px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  background: #FDEDEB;
+  border: 1px solid #E8A39B;
+  color: #7a1f14;
+  font-size: 0.85rem;
+}
+.submit-error.visible { display: block; }
+
+.btn[disabled] { opacity: 0.7; cursor: progress; }
+
+@media (max-width: 600px) {
+  .nav-buttons { flex-wrap: wrap; }
+  .nav-buttons .step-counter { order: -1; width: 100%; text-align: center; }
+  .section-body { padding: 22px 18px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="preview-banner" id="previewBanner" hidden>Preview version: answers are not saved and nothing is sent to the school.</div>
+
+<!-- ── HEADER ──────────────────────────────────────────── -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="header-logo">
+      <a href="#" onclick="showChooser(); return false;" aria-label="Back to start">
+        <img src="data:image/png;base64,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" alt="Liskeard Sixth Form" class="header-logo-img">
+      </a>
+    </div>
+    <div class="header-text">
+      <p id="headerSub">Application Form 2027–28</p>
+    </div>
+  </div>
+</header>
+
+<!-- ── PROGRESS ────────────────────────────────────────── -->
+<div class="progress-wrap" id="progressWrap" hidden>
+  <div class="progress-inner">
+    <div class="progress-labels" id="progressLabels"></div>
+    <div class="progress-track">
+      <div class="progress-fill" id="progressFill"></div>
+    </div>
+  </div>
+</div>
+
+<main class="main">
+
+  <!-- ══════════════════════════════════════════════════
+       CHOOSER
+  ══════════════════════════════════════════════════ -->
+  <section id="chooser">
+    <div class="chooser-intro">
+      <h2>Apply to Liskeard Sixth Form</h2>
+      <p>There are two versions of the application form. Choose the one that matches where you're studying now.</p>
+    </div>
+
+    <div class="chooser">
+      <button type="button" class="chooser-card internal" onclick="showForm('internal')">
+        <span class="cc-band"></span>
+        <span class="cc-body">
+          <h3>I'm in Year 11 at Liskeard School &amp; Community College</h3>
+          <p>A short form. The school already holds your contact, medical and consent details, so we only need your course choices.</p>
+          <span class="cc-meta"><span>About 5 minutes</span><span class="cc-go">Start internal form</span></span>
+        </span>
+      </button>
+
+      <button type="button" class="chooser-card external" onclick="showForm('external')">
+        <span class="cc-band"></span>
+        <span class="cc-body">
+          <h3>I'm applying from another school</h3>
+          <p>The full application, including contacts, medical details and consents. A parent or carer should complete it with you.</p>
+          <span class="cc-meta"><span>About 20 minutes</span><span class="cc-go">Start external form</span></span>
+        </span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════════
+       INTERNAL FORM
+  ══════════════════════════════════════════════════ -->
+  <form id="form-internal" class="app-form" novalidate hidden onsubmit="return false">
+
+    <!-- STEP 1 -->
+    <div class="step" data-step="1">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">1</div>
+          <div class="section-title-group">
+            <h2>About you</h2>
+            <p>So we can match your application to your school record</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="int_forename">Forename <span class="req">*</span></label>
+              <input type="text" id="int_forename" name="Forename" autocomplete="given-name" data-req>
+            </div>
+            <div class="field">
+              <label for="int_surname">Surname <span class="req">*</span></label>
+              <input type="text" id="int_surname" name="Surname" autocomplete="family-name" data-req>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="int_tutor">Current tutor group <span class="req">*</span></label>
+              <input type="text" id="int_tutor" name="Tutor group" placeholder="e.g. 11ABC" data-req>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step" data-step="2">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">2</div>
+          <div class="section-title-group">
+            <h2>Course choices</h2>
+            <p>Choose three courses, plus a back-up in case one doesn't run</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="info-box" style="margin-bottom:22px">
+            <span class="icon">ℹ️</span>
+            <span>Please tell us which courses you're currently interested in studying at Sixth Form. Your final, formal options form will be submitted as part of the February options process.</span>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="int_opt1">Option 1 <span class="req">*</span></label>
+              <select id="int_opt1" name="Option 1" data-courses data-req></select>
+            </div>
+            <div class="field">
+              <label for="int_opt2">Option 2 <span class="req">*</span></label>
+              <select id="int_opt2" name="Option 2" data-courses data-req></select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="int_opt3">Option 3 <span class="req">*</span></label>
+              <select id="int_opt3" name="Option 3" data-courses data-req></select>
+            </div>
+            <div class="field">
+              <label for="int_backup">Back-up option <span class="req">*</span></label>
+              <select id="int_backup" name="Back-up option" data-courses data-req></select>
+              <p class="hint">In case one of your courses doesn't run</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step" data-step="3">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">3</div>
+          <div class="section-title-group">
+            <h2>Your plans after Year 11</h2>
+            <p>This helps us plan places. It won't affect your application.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field">
+            <label>Further education choices <span class="req">*</span></label>
+            <p class="hint" style="margin-bottom:8px">Tap each option in order of preference, starting with your first choice.</p>
+            <div class="rank-list" data-rank="FE choice" data-req data-err="Please put all four options in order">
+              <button type="button" class="rank-item" data-value="Liskeard Sixth Form"><span class="rank-num"></span>Liskeard Sixth Form</button>
+              <button type="button" class="rank-item" data-value="A different school sixth form"><span class="rank-num"></span>A different school sixth form</button>
+              <button type="button" class="rank-item" data-value="College"><span class="rank-num"></span>College</button>
+              <button type="button" class="rank-item" data-value="Other"><span class="rank-num"></span>Other</button>
+            </div>
+            <div class="rank-tools">
+              <span class="hint">Tap a numbered option again to remove it.</span>
+              <button type="button" class="link-btn plain" data-rank-clear>Start again</button>
+            </div>
+          </div>
+          <div class="reveal-block" data-reveal-for="FE other ranked" data-reveal-when="yes">
+            <div class="field">
+              <label for="int_fe_other">What is the other option? <span class="opt">(optional)</span></label>
+              <input type="text" id="int_fe_other" name="FE other detail" placeholder="e.g. apprenticeship, employment">
+            </div>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <div class="declaration" role="checkbox" tabindex="0" aria-checked="false" data-decl>
+              <input type="checkbox" name="Declaration" value="Confirmed" data-req data-err="Please confirm this to submit">
+              <div class="decl-box"></div>
+              <div class="decl-text">I confirm the information is correct at the time of submission.</div>
+            </div>
+          </div>
+          <div class="submit-error" role="alert"></div>
+        </div>
+      </div>
+      <div class="nav-buttons" data-last></div>
+    </div>
+  </form>
+
+  <!-- ══════════════════════════════════════════════════
+       EXTERNAL FORM
+  ══════════════════════════════════════════════════ -->
+  <form id="form-external" class="app-form" novalidate hidden onsubmit="return false">
+
+    <!-- STEP 1 — APPLICANT -->
+    <div class="step" data-step="1">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">1</div>
+          <div class="section-title-group">
+            <h2>Applicant details</h2>
+            <p>Please use the applicant's legal name as it appears on official documents</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_legal_fn">Legal forename <span class="req">*</span></label>
+              <input type="text" id="ext_legal_fn" name="Legal forename" autocomplete="given-name" data-req>
+            </div>
+            <div class="field">
+              <label for="ext_legal_sn">Legal surname <span class="req">*</span></label>
+              <input type="text" id="ext_legal_sn" name="Legal surname" autocomplete="family-name" data-req>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_pref_fn">Preferred forename <span class="opt">(if different)</span></label>
+              <input type="text" id="ext_pref_fn" name="Preferred forename">
+            </div>
+            <div class="field">
+              <label for="ext_pref_sn">Preferred surname <span class="opt">(if different)</span></label>
+              <input type="text" id="ext_pref_sn" name="Preferred surname">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_middle">Middle name(s) <span class="opt">(if any)</span></label>
+              <input type="text" id="ext_middle" name="Middle name(s)" autocomplete="additional-name">
+            </div>
+            <div class="field">
+              <label for="ext_prev_sn">Previous surname(s) used <span class="opt">(if relevant)</span></label>
+              <input type="text" id="ext_prev_sn" name="Previous surname(s)">
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_dob">Date of birth <span class="req">*</span></label>
+              <input type="date" id="ext_dob" name="Date of birth" autocomplete="bday" data-req>
+            </div>
+            <div class="field">
+              <label for="ext_sex">Biological sex at birth <span class="req">*</span></label>
+              <select id="ext_sex" name="Sex at birth" data-req>
+                <option value="">— Select —</option>
+                <option>Female</option>
+                <option>Male</option>
+              </select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_gender">Gender identity <span class="req">*</span></label>
+              <select id="ext_gender" name="Gender identity" data-req>
+                <option value="">— Select —</option>
+                <option>Female</option>
+                <option>Male</option>
+                <option>Non-binary</option>
+                <option>Prefer to self-describe</option>
+                <option>Prefer not to say</option>
+              </select>
+              <div class="reveal-block" data-reveal-for="Gender identity" data-reveal-when="Prefer to self-describe">
+                <label for="ext_gender_self">Please describe</label>
+                <input type="text" id="ext_gender_self" name="Gender identity (self-described)">
+              </div>
+            </div>
+            <div class="field">
+              <label for="ext_pronouns">Pronouns <span class="req">*</span></label>
+              <select id="ext_pronouns" name="Pronouns" data-req>
+                <option value="">— Select —</option>
+                <option>She/her</option>
+                <option>He/him</option>
+                <option>They/them</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+              <div class="reveal-block" data-reveal-for="Pronouns" data-reveal-when="Other">
+                <label for="ext_pronouns_other">Please specify</label>
+                <input type="text" id="ext_pronouns_other" name="Pronouns (other)">
+              </div>
+            </div>
+          </div>
+
+          <div class="field-row single">
+            <div class="field">
+              <label for="ext_address">Home address, including postcode <span class="req">*</span></label>
+              <textarea id="ext_address" name="Home address" rows="3" autocomplete="street-address" data-req></textarea>
+              <p class="hint">The address where the applicant lives most of the time in a typical week</p>
+            </div>
+          </div>
+
+          <div class="field-row single">
+            <div class="field">
+              <label for="ext_family">Family links <span class="opt">(if any)</span></label>
+              <textarea id="ext_family" name="Family links" rows="2" placeholder="Name and year group"></textarea>
+              <p class="hint">Brothers and sisters, including half and step siblings, currently at Liskeard School &amp; Community College</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 2 — CONTACTS -->
+    <div class="step" data-step="2">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">2</div>
+          <div class="section-title-group">
+            <h2>Contacts</h2>
+            <p>List contacts in the order we should call them. We need at least two.</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div id="contactsWrap"></div>
+
+          <button type="button" class="add-row-btn" id="addContactBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Add a third contact</span>
+          </button>
+
+          <div class="divider"></div>
+
+          <div class="field">
+            <p class="q-text" style="font-size:0.88rem;margin-bottom:10px">Reports and correspondence are only sent automatically to the first contact.</p>
+            <div class="check-group">
+              <label class="check-item">
+                <input type="checkbox" name="Copy to non-resident parent" value="Yes">
+                <span class="check-box"></span>
+                <span class="check-label">Please also send copies to a non-resident parent</span>
+              </label>
+            </div>
+            <div class="reveal-block" data-reveal-for="Copy to non-resident parent" data-reveal-when="Yes">
+              <label for="ext_nonres_which">Which contact? <span class="req">*</span></label>
+              <select id="ext_nonres_which" name="Non-resident parent contact" data-req>
+                <option value="">— Select —</option>
+                <option>Contact 2</option>
+                <option>Contact 3</option>
+                <option>Contact 4</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 3 — MEDICAL -->
+    <div class="step" data-step="3">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">3</div>
+          <div class="section-title-group">
+            <h2>Medical information</h2>
+            <p>Shared only with staff who need it to keep the applicant safe</p>
+          </div>
+        </div>
+        <div class="section-body">
+
+          <div class="sub-heading" style="margin-top:0">Emergency consent</div>
+          <div class="field">
+            <!-- WORDING TO BE CONFIRMED BY LISKEARD -->
+            <div class="ack" data-name="Medical emergency consent" data-req data-err="This consent is required to apply">In an emergency, if a contact can't be reached, I consent to the school seeking any medical treatment the applicant needs.</div>
+          </div>
+
+          <div class="sub-heading">GP surgery</div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_gp_name">Surgery name <span class="req">*</span></label>
+              <input type="text" id="ext_gp_name" name="GP surgery name" data-req>
+            </div>
+            <div class="field">
+              <label for="ext_gp_phone">Surgery phone number <span class="req">*</span></label>
+              <input type="tel" id="ext_gp_phone" name="GP surgery phone" data-req>
+            </div>
+          </div>
+          <div class="field-row single">
+            <div class="field">
+              <label for="ext_gp_address">Surgery address <span class="req">*</span></label>
+              <textarea id="ext_gp_address" name="GP surgery address" rows="2" data-req></textarea>
+            </div>
+          </div>
+
+          <div class="sub-heading">Medical details</div>
+          <div class="field">
+            <label>Does the applicant have any known medical conditions or allergies? <span class="req">*</span></label>
+            <div class="yn" data-name="Medical conditions or allergies" data-req></div>
+          </div>
+          <div class="reveal-block" data-reveal-for="Medical conditions or allergies" data-reveal-when="Yes">
+            <div class="field">
+              <label for="ext_med_detail">Please give details <span class="req">*</span></label>
+              <textarea id="ext_med_detail" name="Medical details" rows="3" placeholder="Condition or allergy, medication, and anything staff should know" data-req></textarea>
+            </div>
+          </div>
+
+          <div class="field" style="margin-top:18px">
+            <label>Does the applicant have special educational needs or an Education, Health and Care Plan (EHCP)? <span class="req">*</span></label>
+            <div class="radio-group inline" data-options="No|SEND support|EHCP|Not sure" data-name="SEND or EHCP" data-req></div>
+          </div>
+          <div class="reveal-block" data-reveal-for="SEND or EHCP" data-reveal-when="SEND support|EHCP|Not sure">
+            <div class="field">
+              <label for="ext_send_detail">Anything you'd like us to know <span class="opt">(optional)</span></label>
+              <textarea id="ext_send_detail" name="SEND details" rows="3"></textarea>
+              <p class="hint">Our SENCO will be in touch to plan the move to Sixth Form.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 4 — EDUCATION -->
+    <div class="step" data-step="4">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">4</div>
+          <div class="section-title-group">
+            <h2>Education</h2>
+            <p>Current school and Sixth Form course choices</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="sub-heading" style="margin-top:0">Previous school</div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_school">School name <span class="req">*</span></label>
+              <input type="text" id="ext_school" name="Previous school name" data-req>
+            </div>
+            <div class="field">
+              <label for="ext_school_phone">School phone number <span class="req">*</span></label>
+              <input type="tel" id="ext_school_phone" name="Previous school phone" data-req>
+            </div>
+          </div>
+          <div class="field-row single">
+            <div class="field">
+              <label for="ext_school_addr">School address <span class="req">*</span></label>
+              <textarea id="ext_school_addr" name="Previous school address" rows="2" data-req></textarea>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_school_from">Attended from <span class="req">*</span></label>
+              <input type="date" id="ext_school_from" name="Attended from" data-req>
+            </div>
+            <div class="field">
+              <label for="ext_school_to">Attended until <span class="req">*</span></label>
+              <input type="date" id="ext_school_to" name="Attended until" data-req>
+              <p class="hint">If still attending, enter the expected leaving date</p>
+            </div>
+          </div>
+
+          <div class="sub-heading">Course choices</div>
+          <div class="info-box" style="margin-bottom:18px">
+            <span class="icon">ℹ️</span>
+            <span>These choices are an initial expression of interest. The courses that will be running are confirmed in March, when final decisions are made.</span>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_opt1">Option 1 <span class="req">*</span></label>
+              <select id="ext_opt1" name="Option 1" data-courses data-req></select>
+            </div>
+            <div class="field">
+              <label for="ext_opt2">Option 2 <span class="req">*</span></label>
+              <select id="ext_opt2" name="Option 2" data-courses data-req></select>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_opt3">Option 3 <span class="req">*</span></label>
+              <select id="ext_opt3" name="Option 3" data-courses data-req></select>
+            </div>
+            <div class="field">
+              <label for="ext_backup">Back-up option <span class="req">*</span></label>
+              <select id="ext_backup" name="Back-up option" data-courses data-req></select>
+              <p class="hint">In case one of the courses doesn't run</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 5 — BACKGROUND -->
+    <div class="step" data-step="5">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">5</div>
+          <div class="section-title-group">
+            <h2>Background</h2>
+            <p>Collected for the Department for Education school census and to make sure the right support is in place</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_ethnicity">Ethnicity <span class="req">*</span></label>
+              <select id="ext_ethnicity" name="Ethnicity" data-req>
+                <option value="">— Select —</option>
+                <optgroup label="White">
+                  <option>White – British</option>
+                  <option>White – Cornish</option>
+                  <option>White – Irish</option>
+                  <option>Traveller of Irish heritage</option>
+                  <option>Gypsy / Roma</option>
+                  <option>Any other White background</option>
+                </optgroup>
+                <optgroup label="Mixed / dual background">
+                  <option>White and Black Caribbean</option>
+                  <option>White and Black African</option>
+                  <option>White and Asian</option>
+                  <option>Any other mixed background</option>
+                </optgroup>
+                <optgroup label="Asian or Asian British">
+                  <option>Indian</option>
+                  <option>Pakistani</option>
+                  <option>Bangladeshi</option>
+                  <option>Any other Asian background</option>
+                </optgroup>
+                <optgroup label="Black or Black British">
+                  <option>Black Caribbean</option>
+                  <option>Black African</option>
+                  <option>Any other Black background</option>
+                </optgroup>
+                <optgroup label="Other">
+                  <option>Chinese</option>
+                  <option>Any other ethnic group</option>
+                  <option>Prefer not to say</option>
+                </optgroup>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ext_national">National identity <span class="req">*</span></label>
+              <select id="ext_national" name="National identity" data-req>
+                <option value="">— Select —</option>
+                <option>British</option>
+                <option>English</option>
+                <option>Cornish</option>
+                <option>Welsh</option>
+                <option>Scottish</option>
+                <option>Northern Irish</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+              <div class="reveal-block" data-reveal-for="National identity" data-reveal-when="Other">
+                <label for="ext_national_other">Please specify</label>
+                <input type="text" id="ext_national_other" name="National identity (other)">
+              </div>
+            </div>
+          </div>
+          <div class="field-row">
+            <div class="field">
+              <label for="ext_religion">Religion <span class="req">*</span></label>
+              <select id="ext_religion" name="Religion" data-req>
+                <option value="">— Select —</option>
+                <option>None</option>
+                <option>Buddhist</option>
+                <option>Christian</option>
+                <option>Hindu</option>
+                <option>Jewish</option>
+                <option>Muslim</option>
+                <option>Sikh</option>
+                <option>Other</option>
+                <option>Prefer not to say</option>
+              </select>
+              <div class="reveal-block" data-reveal-for="Religion" data-reveal-when="Other">
+                <label for="ext_religion_other">Please specify</label>
+                <input type="text" id="ext_religion_other" name="Religion (other)">
+              </div>
+            </div>
+            <div class="field">
+              <label for="ext_lang1">First language <span class="req">*</span></label>
+              <input type="text" id="ext_lang1" name="First language" placeholder="e.g. English" data-req>
+            </div>
+          </div>
+          <div class="field-row single">
+            <div class="field">
+              <label for="ext_lang2">Home language or any additional languages <span class="opt">(if any)</span></label>
+              <input type="text" id="ext_lang2" name="Home / additional languages">
+            </div>
+          </div>
+
+          <div class="sub-heading">Additional information</div>
+          <p class="hint" style="font-style:normal;margin-bottom:10px">Tick any that apply to the applicant.</p>
+          <div class="check-group" data-group="Additional info">
+            <label class="check-item"><input type="checkbox" name="Additional info" value="Internet access at home"><span class="check-box"></span><span class="check-label">Has access to the internet at home</span></label>
+            <label class="check-item"><input type="checkbox" name="Additional info" value="Currently eligible for FSM"><span class="check-box"></span><span class="check-label">Is currently eligible for Free School Meals</span></label>
+            <label class="check-item"><input type="checkbox" name="Additional info" value="FSM in last 6 years"><span class="check-box"></span><span class="check-label">Has been eligible for Free School Meals at any time in the last 6 years<small>Not including Universal Infant Free School Meals in Year 2 or below</small></span></label>
+            <label class="check-item"><input type="checkbox" name="Additional info" value="Parent/carer in regular Armed Forces since 2017"><span class="check-box"></span><span class="check-label">A parent or carer has served in the regular Armed Forces (not reservists) since 2017</span></label>
+            <label class="check-item"><input type="checkbox" name="Additional info" value="Looked after / previously looked after"><span class="check-box"></span><span class="check-label">Is in Local Authority care, has been in care for 1 day or more, or left care through adoption, a special guardianship order or a child arrangements order</span></label>
+          </div>
+          <div class="reveal-block" data-reveal-for="Additional info" data-reveal-when="Currently eligible for FSM|FSM in last 6 years|Parent/carer in regular Armed Forces since 2017|Looked after / previously looked after">
+            <div class="field">
+              <label for="ext_addinfo_detail">Please give details</label>
+              <textarea id="ext_addinfo_detail" name="Additional info details" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 6 — CONSENTS -->
+    <div class="step" data-step="6">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">6</div>
+          <div class="section-title-group">
+            <h2>Permissions and consent</h2>
+            <p>To be completed by a parent or carer with parental responsibility</p>
+          </div>
+        </div>
+        <div class="section-body">
+
+          <div class="sub-heading" style="margin-top:0">School permissions</div>
+
+          <div class="question field">
+            <p class="q-text"><strong>Copyright permission.</strong> This lets us display, share and promote your child's good work.</p>
+            <div class="yn" data-name="Copyright permission" data-req></div>
+          </div>
+          <div class="question field">
+            <p class="q-text"><strong>Internet access.</strong> Needed for much schoolwork and homework. Our <a data-link="aup">Acceptable Use Policy</a> applies.</p>
+            <div class="yn" data-name="Internet access" data-req></div>
+          </div>
+          <div class="question field">
+            <p class="q-text"><strong>Sex education.</strong> This is part of the National Curriculum and is delivered sensitively.</p>
+            <div class="yn" data-name="Sex education" data-req></div>
+          </div>
+          <div class="question field">
+            <p class="q-text"><strong>Biometric catering.</strong> Register my child on the Academy's biometric (fingerprint) cashless catering system. Please read the <a data-link="biometric">Biometric Data Policy</a> before answering.</p>
+            <div class="yn" data-name="Biometric catering" data-req></div>
+          </div>
+          <div class="question field">
+            <div class="ack" data-name="Home School Agreement" data-req>I have read and agree to abide by the <a data-link="homeSchool">Home School Agreement</a>.</div>
+          </div>
+
+          <div class="sub-heading">Use of student images by the Academy and SMART</div>
+          <div class="question field">
+            <p class="q-text"><strong>Images.</strong> I consent to images of my child being taken and used by the Academy and SMART.</p>
+            <div class="yn" data-name="Consent: images" data-req></div>
+          </div>
+          <div class="question field">
+            <p class="q-text"><strong>Names.</strong> I consent to my child's first name and surname being published online, with or without their image.</p>
+            <div class="yn" data-name="Consent: name published" data-req></div>
+          </div>
+
+          <div class="sub-heading">School trips and off-site activities</div>
+          <p class="hint" style="font-style:normal;margin-bottom:6px">This is a five-year consent covering school trips and other off-site activities.</p>
+
+          <div class="question field">
+            <div class="ack" data-name="Trips: emergency contacts" data-req>I acknowledge that the emergency contact details used will be those held by the school at the time of the visit, for contacts with parental responsibility.</div>
+          </div>
+          <div class="question field">
+            <label for="ext_trip_med">Medical conditions and medication needed on off-site visits <span class="opt">(if any)</span></label>
+            <textarea id="ext_trip_med" name="Trips: medical and medication" rows="3" style="margin-top:6px"></textarea>
+            <p class="hint">Students with conditions such as asthma or severe allergies must bring their medication on every visit.</p>
+          </div>
+          <div class="question field">
+            <div class="ack" data-name="Trips: behaviour" data-req>I acknowledge the need for my child to behave responsibly at all times.</div>
+          </div>
+          <div class="question field">
+            <div class="ack" data-name="Trips: staff care" data-req>I understand that the staff responsible for activities will take all reasonable care of participants.</div>
+          </div>
+          <div class="question field">
+            <div class="ack" data-name="Trips: emergency treatment" data-req>I consent to any emergency treatment necessary, and authorise the party leader(s) to sign on my behalf any written consent required by hospital authorities should medical treatment be needed.</div>
+          </div>
+          <div class="question field">
+            <p class="q-text">I consent to my child travelling in a motor vehicle driven by a member of staff or other verified adult in an emergency, in line with SMART and Local Authority guidance.</p>
+            <div class="yn" data-name="Trips: emergency vehicle travel" data-req></div>
+          </div>
+          <div class="question field">
+            <p class="q-text">I give overall consent to the <strong>Five Year Consent for School Trips and Other Off-Site Activities</strong>.</p>
+            <div class="yn" data-name="Trips: five-year consent" data-req></div>
+          </div>
+
+          <div class="sub-heading">Student Acceptable Use Policy</div>
+          <div class="question field">
+            <div class="ack" data-name="AUP: parent consent" data-req>As parent or carer, I agree to my child following the <a data-link="studentAup">Student Acceptable Use Policy</a>.</div>
+          </div>
+          <div class="question field">
+            <div class="ack" data-name="AUP: student agreement" data-req>As the student, I agree to follow the <a data-link="studentAup">Student Acceptable Use Policy</a>.</div>
+          </div>
+        </div>
+      </div>
+      <div class="nav-buttons"></div>
+    </div>
+
+    <!-- STEP 7 — SUBMIT -->
+    <div class="step" data-step="7">
+      <div class="section-card">
+        <div class="section-header">
+          <div class="section-num">7</div>
+          <div class="section-title-group">
+            <h2>Declaration</h2>
+            <p>Please read before sending the application</p>
+          </div>
+        </div>
+        <div class="section-body">
+          <div class="gdpr-box">
+            <strong>Data and privacy</strong><br>
+            The information on this form is used to process the application to Liskeard Sixth Form and, if a place is accepted, to set up the student's school record. It is stored securely and shared only with staff who need it. To access, correct or ask about your data, contact <strong>sixthform@liskeard.net</strong>.
+          </div>
+          <div class="field">
+            <div class="declaration" role="checkbox" tabindex="0" aria-checked="false" data-decl>
+              <input type="checkbox" name="Declaration" value="Confirmed" data-req data-err="Please confirm this to submit">
+              <div class="decl-box"></div>
+              <div class="decl-text">I confirm the information is correct at the time of submission.</div>
+            </div>
+          </div>
+          <div class="submit-error" role="alert"></div>
+        </div>
+      </div>
+      <div class="nav-buttons" data-last></div>
+    </div>
+  </form>
+
+  <!-- ══ SUCCESS ═════════════════════════════════════ -->
+  <div class="success-screen" id="successScreen">
+    <div class="success-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+    </div>
+    <h2>Application sent</h2>
+    <p id="successMsg">Thank you for applying to Liskeard Sixth Form.</p>
+    <p id="successPreview" hidden><em>This is the preview version, so nothing was sent.</em></p>
+    <div class="success-next">
+      <h3>Questions?</h3>
+      <ol style="list-style:none;padding-left:0">
+        <li>Email <strong>sixthform@liskeard.net</strong></li>
+        <li>Call <strong>01579 342344</strong></li>
+      </ol>
+    </div>
+    <p style="margin-top:24px"><button type="button" class="btn btn-secondary" onclick="showChooser()">Back to start</button></p>
+  </div>
+
+</main>
+
+<footer class="site-footer">
+  <p>Liskeard School &amp; Community College is a member of SMART Schools Trust (South East Cornwall Multi Academy Regional Trust), an exempt charity and a company limited by guarantee, registered in England and Wales with company number 7542166 – SMART's registered office is at Liskeard School and Community College, Luxstowe, Liskeard, Cornwall PL14 3EA</p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   SETTINGS — the only part that normally needs editing
+═══════════════════════════════════════════════════════════ */
+
+// Paste the Power Automate "When an HTTP request is received" URL here
+// once IT has set up the flow. Leave empty to run as a preview
+// (the form works end to end but nothing is sent).
+const SUBMIT_URL = '';
+
+// Courses shown in every Option / Back-up dropdown on both forms.
+// Taken from the Liskeard Sixth Form course list (check against the current prospectus).
+// A line starting with "---" becomes a non-selectable group heading.
+const COURSES = [
+  "--- A Levels ---",
+  "Art and Design", "Biology", "Business", "Chemistry", "Drama and Theatre Studies",
+  "English Language", "English Literature", "Environmental Science", "French",
+  "Further Mathematics", "Geography", "History", "Mathematics", "Media Studies",
+  "Music", "Philosophy and Ethics (RS)", "Photography", "Physical Education",
+  "Physics", "Product Design", "Psychology", "Spanish", "Textiles",
+  "--- Alternative Level 3 courses ---",
+  "Applied Science – Extended Certificate (BTEC)",
+  "Core Maths – Level 3 Mathematical Studies",
+  "Sport – Extended Certificate (OCR Cambridge Technical)",
+  "Sport – Diploma (OCR Cambridge Technical) (2 courses)",
+  "Health and Social Care – Diploma (BTEC) (2 courses)"
+];
+
+// Courses that take up more than one of the three option slots
+const COURSE_SLOTS = {
+  "Sport – Diploma (OCR Cambridge Technical) (2 courses)": 2,
+  "Health and Social Care – Diploma (BTEC) (2 courses)": 2
+};
+
+// Combinations the prospectus rules out (checked across Options 1–3)
+const COURSE_RULES = [
+  { test: c => c.includes("Further Mathematics") && !c.includes("Mathematics"),
+    msg: "Further Mathematics must be taken alongside Mathematics" }
+];
+
+const FORMS = {
+  internal: { title: 'Internal application 2027–28', steps: ['You', 'Courses', 'Plans'] },
+  external: { title: 'External application 2027–28', steps: ['Applicant', 'Contacts', 'Medical', 'Education', 'Background', 'Consent', 'Submit'] }
+};
+
+const MAX_FILE_MB = 5;
+
+// Policy links used on the external form. Paste each full web address
+// between the quote marks. A link left empty shows as plain text
+// (not clickable) so applicants never land on a broken page.
+const LINKS = {
+  aup:        'https://www.smart-trust.net/attachments/download.asp?file=452&type=pdf',  // Acceptable Use Policy (internet access question)
+  studentAup: 'https://www.smart-trust.net/attachments/download.asp?file=452&type=pdf',  // Student Acceptable Use Policy (parent and student agreements)
+  homeSchool: '',                                                                       // Home School Agreement — add Liskeard's link
+  biometric:  'https://www.smart-trust.net/attachments/download.asp?file=502&type=pdf'   // Biometric Data Policy on the SMART website
+};
+
+/* ═══════════════════════════════════════════════════════════
+   BUILD REPEATED MARKUP
+═══════════════════════════════════════════════════════════ */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+function radioGroupHTML(name, options) {
+  return options.map(o => `
+    <label class="radio-item">
+      <input type="radio" name="${esc(name)}" value="${esc(o)}">
+      <span class="radio-dot"></span>
+      <span class="radio-label">${esc(o)}</span>
+    </label>`).join('');
+}
+
+function buildYesNo() {
+  document.querySelectorAll('.yn').forEach(el => {
+    el.classList.add('radio-group', 'inline');
+    el.innerHTML = radioGroupHTML(el.dataset.name, ['Yes', 'No']);
+  });
+  document.querySelectorAll('.radio-group[data-options]').forEach(el => {
+    el.innerHTML = radioGroupHTML(el.dataset.name, el.dataset.options.split('|'));
+  });
+}
+
+function buildAcks() {
+  document.querySelectorAll('.ack').forEach(el => {
+    const label = document.createElement('label');
+    label.className = 'check-item';
+    if (el.hasAttribute('data-req')) label.setAttribute('data-req', '');
+    if (el.dataset.err) label.dataset.err = el.dataset.err;
+    label.innerHTML = `<input type="checkbox" name="${esc(el.dataset.name)}" value="Agreed"><span class="check-box"></span><span class="check-label">${el.innerHTML}</span>`;
+    el.replaceWith(label);
+  });
+}
+
+function buildCourses() {
+  document.querySelectorAll('select[data-courses]').forEach(sel => {
+    let html = '<option value="">— Select a course —</option>';
+    let open = false;
+    COURSES.forEach(c => {
+      if (c.startsWith('---')) {
+        if (open) html += '</optgroup>';
+        html += `<optgroup label="${esc(c.replace(/-/g, '').trim())}">`;
+        open = true;
+      } else {
+        html += `<option>${esc(c)}</option>`;
+      }
+    });
+    if (open) html += '</optgroup>';
+    sel.innerHTML = html;
+  });
+}
+
+function contactHTML(n) {
+  const p = `Contact ${n}`;
+  const id = `c${n}`;
+  const req = 'data-req';  // required whenever the block is shown
+  return `
+  <div class="contact-block ${n > 2 ? 'is-hidden' : ''}" data-contact="${n}">
+    <div class="contact-block-head">
+      <h3>${p}</h3>
+      ${n <= 2 ? `<span class="tag">${n === 1 ? 'Main contact' : 'Required'}</span>` : `<button type="button" class="link-btn" data-remove-contact="${n}">Remove</button>`}
+    </div>
+
+    <div class="field-row title-row">
+      <div class="field">
+        <label for="${id}_title">Title <span class="req">*</span></label>
+        <select id="${id}_title" name="${p} title" ${req}>
+          <option value="">—</option><option>Mr</option><option>Mrs</option><option>Miss</option><option>Ms</option><option>Mx</option><option>Dr</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label for="${id}_fn">Forename <span class="req">*</span></label>
+        <input type="text" id="${id}_fn" name="${p} forename" ${req}>
+      </div>
+      <div class="field">
+        <label for="${id}_sn">Surname <span class="req">*</span></label>
+        <input type="text" id="${id}_sn" name="${p} surname" ${req}>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label for="${id}_rel">Relationship to student <span class="req">*</span></label>
+        <select id="${id}_rel" name="${p} relationship" ${req}>
+          <option value="">— Select —</option>
+          <option>Mother</option><option>Father</option><option>Step-mother</option><option>Step-father</option>
+          <option>Grandparent</option><option>Aunt / Uncle</option><option>Foster carer</option><option>Carer</option>
+          <option>Social worker</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <div class="reveal-block" data-reveal-for="${p} relationship" data-reveal-when="Other" style="margin-top:0">
+          <label for="${id}_rel_other">Please specify <span class="req">*</span></label>
+          <input type="text" id="${id}_rel_other" name="${p} relationship (other)" ${req}>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <div class="field-row triple any-of" ${req} data-err="Please give at least one phone number" style="margin-bottom:6px">
+        <div class="field"><label for="${id}_mob">Mobile</label><input type="tel" id="${id}_mob" name="${p} mobile"></div>
+        <div class="field"><label for="${id}_land">Landline</label><input type="tel" id="${id}_land" name="${p} landline"></div>
+        <div class="field"><label for="${id}_work">Work</label><input type="tel" id="${id}_work" name="${p} work phone"></div>
+      </div>
+      <p class="hint" style="margin-bottom:18px">At least one number, please</p>
+    </div>
+
+    <div class="field-row single">
+      <div class="field">
+        <label for="${id}_email">Email address <span class="req">*</span></label>
+        <input type="email" id="${id}_email" name="${p} email" ${req}>
+      </div>
+    </div>
+
+    <div class="field" style="margin-bottom:18px">
+      <label>Lives at the same address as the applicant? <span class="req">*</span></label>
+      <div class="radio-group inline" ${req}>${radioGroupHTML(`${p} same address`, ['Yes', 'No'])}</div>
+      <div class="reveal-block" data-reveal-for="${p} same address" data-reveal-when="No">
+        <label for="${id}_addr">Their address, including postcode <span class="req">*</span></label>
+        <textarea id="${id}_addr" name="${p} address" rows="2" ${req}></textarea>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Has parental responsibility? <span class="req">*</span></label>
+        <div class="radio-group inline" ${req}>${radioGroupHTML(`${p} parental responsibility`, ['Yes', 'No'])}</div>
+      </div>
+      <div class="field">
+        <label>Is there a Court Order in place? <span class="req">*</span></label>
+        <div class="radio-group inline" ${req}>${radioGroupHTML(`${p} court order`, ['Yes', 'No'])}</div>
+      </div>
+    </div>
+    <div class="reveal-block" data-reveal-for="${p} court order" data-reveal-when="Yes" style="margin:-4px 0 18px">
+      <div class="field">
+        <label for="${id}_court">Please upload a copy of the Court Order <span class="req">*</span></label>
+        <input type="file" id="${id}_court" name="${p} court order file" accept=".pdf,.jpg,.jpeg,.png,.heic,.doc,.docx" ${req}>
+        <p class="hint">PDF, Word or photo, up to ${MAX_FILE_MB} MB</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildContacts() {
+  const wrap = document.getElementById('contactsWrap');
+  wrap.innerHTML = [1, 2, 3, 4].map(contactHTML).join('');
+  updateAddContactBtn();
+}
+
+function visibleContacts() {
+  return [...document.querySelectorAll('.contact-block')].filter(b => !b.classList.contains('is-hidden')).length;
+}
+
+function updateAddContactBtn() {
+  const n = visibleContacts();
+  const btn = document.getElementById('addContactBtn');
+  btn.hidden = n >= 4;
+  btn.querySelector('span').textContent = n === 2 ? 'Add a third contact' : 'Add a fourth contact';
+}
+
+function wireLinks() {
+  document.querySelectorAll('a[data-link]').forEach(a => {
+    const url = (LINKS[a.dataset.link] || '').trim();
+    if (url) {
+      a.href = url;
+      a.target = '_blank';
+      a.rel = 'noopener';
+    } else {
+      const span = document.createElement('strong');
+      span.textContent = a.textContent;
+      a.replaceWith(span);
+      console.warn('Policy link not set yet:', a.dataset.link);
+    }
+  });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INTERACTION
+═══════════════════════════════════════════════════════════ */
+function syncSelected(scope) {
+  scope.querySelectorAll('.radio-item, .check-item').forEach(item => {
+    const inp = item.querySelector('input');
+    item.classList.toggle('selected', inp.checked);
+  });
+}
+
+function valuesFor(form, name) {
+  const els = form.querySelectorAll(`[name="${CSS.escape(name)}"]`);
+  const vals = [];
+  els.forEach(el => {
+    if (el.type === 'radio' || el.type === 'checkbox') { if (el.checked) vals.push(el.value); }
+    else if (el.value) vals.push(el.value);
+  });
+  return vals;
+}
+
+function updateReveals(form) {
+  form.querySelectorAll('.reveal-block[data-reveal-for]').forEach(block => {
+    const want = block.dataset.revealWhen.split('|');
+    const have = valuesFor(form, block.dataset.revealFor);
+    block.classList.toggle('visible', have.some(v => want.includes(v)));
+  });
+}
+
+function clearErrorFor(el) {
+  if (!el.closest) return;
+  let f = el.closest('.field');
+  while (f) { f.classList.remove('has-error'); f = f.parentElement.closest('.field'); }
+  el.classList.remove('error');
+}
+
+function wireForm(form) {
+  form.addEventListener('change', e => {
+    syncSelected(form);
+    updateReveals(form);
+    clearErrorFor(e.target);
+  });
+  form.addEventListener('input', e => clearErrorFor(e.target));
+
+  // Declarations
+  form.querySelectorAll('[data-decl]').forEach(box => {
+    const cb = box.querySelector('input');
+    const toggle = () => {
+      cb.checked = !cb.checked;
+      box.classList.toggle('checked', cb.checked);
+      box.setAttribute('aria-checked', cb.checked);
+      clearErrorFor(box);
+    };
+    box.addEventListener('click', toggle);
+    box.addEventListener('keydown', e => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); toggle(); } });
+  });
+
+  // Navigation buttons
+  const steps = form.querySelectorAll('.step');
+  steps.forEach((stepEl, i) => {
+    const nav = stepEl.querySelector('.nav-buttons');
+    const isFirst = i === 0, isLast = i === steps.length - 1;
+    nav.innerHTML = `
+      <button type="button" class="btn btn-secondary" data-prev>${isFirst ? 'Change form' : 'Back'}</button>
+      <span class="step-counter">Step ${i + 1} of ${steps.length}</span>
+      ${isLast
+        ? `<button type="button" class="btn btn-submit" data-submit>Send application</button>`
+        : `<button type="button" class="btn btn-primary" data-next>Continue
+             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+           </button>`}`;
+  });
+
+  form.addEventListener('click', e => {
+    if (e.target.closest('[data-next]')) goStep(currentStep + 1, true);
+    if (e.target.closest('[data-prev]')) currentStep === 1 ? showChooser() : goStep(currentStep - 1, false);
+    if (e.target.closest('[data-submit]')) submitForm();
+  });
+}
+
+/* Course slots — diplomas fill more than one option */
+function wireCourseSlots(form) {
+  const sels = ['Option 1', 'Option 2', 'Option 3'].map(n => form.querySelector(`select[name="${n}"]`));
+  const note = document.createElement('div');
+  note.className = 'info-box';
+  note.style.marginTop = '4px';
+  note.hidden = true;
+  sels[2].closest('.field-row').after(note);
+
+  const update = () => {
+    sels.forEach(s => s.closest('.field').classList.remove('is-hidden'));
+    const extra = sels.reduce((t, s) => t + ((COURSE_SLOTS[s.value] || 1) - 1), 0);
+    let hidden = 0;
+    for (let i = sels.length - 1; i >= 0 && hidden < extra; i--) {
+      if (COURSE_SLOTS[sels[i].value]) continue;
+      sels[i].value = '';
+      sels[i].closest('.field').classList.add('is-hidden');
+      hidden++;
+    }
+    const dip = sels.find(s => COURSE_SLOTS[s.value]);
+    note.hidden = !dip;
+    if (dip) {
+      const n = COURSE_SLOTS[dip.value];
+      note.innerHTML = `<span class="icon">ℹ️</span><span>${esc(dip.value.replace(/ \(\d courses\)$/, ''))} counts as ${n} courses, so ${n === 3 ? 'no other options are' : 'only one other option is'} needed.</span>`;
+    }
+  };
+  sels.forEach(s => s.addEventListener('change', update));
+}
+
+/* Ranking (internal form) */
+function wireRanking() {
+  const list = document.querySelector('.rank-list');
+  const form = list.closest('form');
+  const order = [];
+  const hidden = [];
+  for (let i = 1; i <= 4; i++) {
+    const h = document.createElement('input');
+    h.type = 'hidden'; h.name = `FE choice ${i}`;
+    form.appendChild(h); hidden.push(h);
+  }
+  const otherFlag = document.createElement('input');
+  otherFlag.type = 'hidden'; otherFlag.name = 'FE other ranked';
+  form.appendChild(otherFlag);
+
+  const render = () => {
+    list.querySelectorAll('.rank-item').forEach(btn => {
+      const idx = order.indexOf(btn.dataset.value);
+      btn.classList.toggle('ranked', idx > -1);
+      btn.querySelector('.rank-num').textContent = idx > -1 ? idx + 1 : '';
+      btn.setAttribute('aria-label', `${btn.dataset.value}${idx > -1 ? ', choice ' + (idx + 1) : ', not ranked'}`);
+    });
+    hidden.forEach((h, i) => h.value = order[i] || '');
+    otherFlag.value = order.includes('Other') ? 'yes' : '';
+    updateReveals(form);
+    if (order.length === 4) clearErrorFor(list);
+  };
+  list.addEventListener('click', e => {
+    const btn = e.target.closest('.rank-item');
+    if (!btn) return;
+    const v = btn.dataset.value;
+    const idx = order.indexOf(v);
+    idx > -1 ? order.splice(idx, 1) : order.push(v);
+    render();
+  });
+  form.querySelector('[data-rank-clear]').addEventListener('click', () => { order.length = 0; render(); });
+  list._isComplete = () => order.length === 4;
+  render();
+}
+
+/* Contacts add/remove */
+function wireContacts() {
+  document.getElementById('addContactBtn').addEventListener('click', () => {
+    const next = document.querySelector('.contact-block.is-hidden');
+    if (next) {
+      next.classList.remove('is-hidden');
+      next.querySelector('input, select').focus();
+    }
+    updateAddContactBtn();
+  });
+  document.getElementById('contactsWrap').addEventListener('click', e => {
+    const btn = e.target.closest('[data-remove-contact]');
+    if (!btn) return;
+    const n = +btn.dataset.removeContact;
+    const four = document.querySelector('[data-contact="4"]');
+    const fourShown = !four.classList.contains('is-hidden');
+    let target = document.querySelector(`[data-contact="${n}"]`);
+    if (n === 3 && fourShown) {
+      // Keep numbering in order: contact 4 moves up to become contact 3
+      moveContact(4, 3);
+      target = four;
+    }
+    resetBlock(target);
+    target.classList.add('is-hidden');
+    updateAddContactBtn();
+  });
+}
+
+function moveContact(from, to) {
+  const src = document.querySelector(`[data-contact="${from}"]`);
+  const dst = document.querySelector(`[data-contact="${to}"]`);
+  const srcEls = src.querySelectorAll('input:not([type=file]), select, textarea');
+  const dstEls = dst.querySelectorAll('input:not([type=file]), select, textarea');
+  srcEls.forEach((el, i) => {
+    const d = dstEls[i];
+    if (el.type === 'radio' || el.type === 'checkbox') d.checked = el.checked;
+    else d.value = el.value;
+  });
+  const sf = src.querySelector('input[type=file]'), df = dst.querySelector('input[type=file]');
+  try { df.files = sf.files; } catch (e) { df.value = ''; }
+  const form = dst.closest('form');
+  syncSelected(form); updateReveals(form);
+}
+
+function resetBlock(block) {
+  block.querySelectorAll('input, select, textarea').forEach(el => {
+    if (el.type === 'radio' || el.type === 'checkbox') el.checked = false;
+    else el.value = '';
+  });
+  block.querySelectorAll('.has-error').forEach(f => f.classList.remove('has-error'));
+  const form = block.closest('form');
+  syncSelected(form); updateReveals(form);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   NAVIGATION
+═══════════════════════════════════════════════════════════ */
+let activeForm = null;
+let currentStep = 1;
+
+function formEl() { return document.getElementById('form-' + activeForm); }
+
+// Updating the address bar is a nice-to-have: some previews (like the
+// one inside Claude) block it, so failures are ignored.
+function setHash(h) {
+  try { history.replaceState(null, '', h ? '#' + h : location.pathname + location.search); }
+  catch (e) { /* preview frame — carry on without changing the URL */ }
+}
+
+function showChooser() {
+  activeForm = null;
+  document.querySelectorAll('.app-form').forEach(f => f.hidden = true);
+  document.getElementById('successScreen').classList.remove('visible');
+  document.getElementById('chooser').hidden = false;
+  document.getElementById('progressWrap').hidden = true;
+  document.getElementById('headerSub').textContent = 'Application Form 2027–28';
+  if (location.hash) setHash('');
+  window.scrollTo({ top: 0 });
+}
+
+function showForm(type) {
+  activeForm = type;
+  document.getElementById('chooser').hidden = true;
+  document.getElementById('successScreen').classList.remove('visible');
+  document.querySelectorAll('.app-form').forEach(f => f.hidden = f.id !== 'form-' + type);
+  document.getElementById('headerSub').textContent = FORMS[type].title;
+  document.getElementById('progressLabels').innerHTML = FORMS[type].steps.map(s => `<span>${s}</span>`).join('');
+  document.getElementById('progressWrap').hidden = false;
+  setHash(type);
+  goStep(1, false);
+}
+
+function goStep(n, validate) {
+  const form = formEl();
+  const steps = form.querySelectorAll('.step');
+  const cur = form.querySelector(`.step[data-step="${currentStep}"]`);
+  if (validate && cur && cur.classList.contains('active') && !validateStep(cur)) return;
+  if (n < 1 || n > steps.length) return;
+  steps.forEach(s => s.classList.toggle('active', +s.dataset.step === n));
+  currentStep = n;
+  const total = steps.length;
+  document.getElementById('progressFill').style.width = ((n - 1) / (total - 1)) * 100 + '%';
+  document.querySelectorAll('#progressLabels span').forEach((l, i) => {
+    l.classList.toggle('active', i + 1 === n);
+    l.classList.toggle('done', i + 1 < n);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VALIDATION
+═══════════════════════════════════════════════════════════ */
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function isShown(el) {
+  return !el.closest('.reveal-block:not(.visible), .is-hidden');
+}
+
+function setError(el, on, msg) {
+  const field = el.closest('.field') || el.parentElement;
+  if (!field) return;
+  field.classList.toggle('has-error', on);
+  if (el.matches('input, select, textarea')) el.classList.toggle('error', on);
+  if (on) {
+    let m = [...field.children].find(c => c.classList.contains('error-msg'));
+    if (!m) { m = document.createElement('span'); m.className = 'error-msg'; field.appendChild(m); }
+    m.textContent = msg || el.dataset.err || 'Please answer this question';
+  }
+}
+
+function validateStep(stepEl) {
+  let ok = true;
+  let first = null;
+  const fail = (el, msg) => { setError(el, true, msg); ok = false; if (!first) first = el; };
+
+  stepEl.querySelectorAll('[data-req]').forEach(el => {
+    if (!isShown(el)) { setError(el, false); return; }
+    let filled;
+    if (el.classList.contains('radio-group')) filled = !!el.querySelector('input:checked');
+    else if (el.classList.contains('check-item')) filled = el.querySelector('input').checked;
+    else if (el.type === 'checkbox') filled = el.checked;
+    else if (el.classList.contains('any-of')) filled = [...el.querySelectorAll('input')].some(i => i.value.trim());
+    else if (el.classList.contains('rank-list')) filled = el._isComplete();
+    else if (el.type === 'file') filled = el.files.length > 0;
+    else filled = el.value.trim() !== '';
+
+    if (!filled) return fail(el);
+    setError(el, false);
+  });
+
+  // Email format (required or not, if something's been typed)
+  stepEl.querySelectorAll('input[type=email]').forEach(el => {
+    if (isShown(el) && el.value.trim() && !EMAIL_RE.test(el.value.trim())) fail(el, 'Please enter a valid email address');
+  });
+
+  // File size
+  stepEl.querySelectorAll('input[type=file]').forEach(el => {
+    if (isShown(el) && el.files[0] && el.files[0].size > MAX_FILE_MB * 1024 * 1024) fail(el, `This file is over ${MAX_FILE_MB} MB. Please upload a smaller copy.`);
+  });
+
+  // Course choices must all be different
+  const courseSels = [...stepEl.querySelectorAll('select[data-courses]')];
+  const seen = new Set();
+  courseSels.forEach(sel => {
+    if (!sel.value) return;
+    if (seen.has(sel.value)) fail(sel, "You've already chosen this course");
+    seen.add(sel.value);
+  });
+
+  // Prospectus combination rules (Options 1–3 only)
+  const chosen = ['Option 1', 'Option 2', 'Option 3']
+    .map(n => stepEl.querySelector(`select[name="${n}"]`))
+    .filter(el => el && isShown(el) && el.value);
+  if (chosen.length) {
+    const vals = chosen.map(el => el.value);
+    const list = { includes: name => vals.includes(name) };  // exact course names
+    const broken = COURSE_RULES.filter(rule => rule.test(list));
+    if (broken.length) fail(chosen[chosen.length - 1], broken.map(r => r.msg).join('. '));
+  }
+
+  // Date of birth sanity check
+  const dob = stepEl.querySelector('input[name="Date of birth"]');
+  if (dob && dob.value) {
+    const age = (Date.now() - new Date(dob.value)) / (365.25 * 864e5);
+    if (age < 13 || age > 25) fail(dob, 'Please check the date of birth');
+  }
+
+  if (first) {
+    const target = first.matches('input, select, textarea') ? first : (first.querySelector('input, button') || first);
+    first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    setTimeout(() => target.focus({ preventScroll: true }), 300);
+  }
+  return ok;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SUBMIT
+═══════════════════════════════════════════════════════════ */
+const toBase64 = file => new Promise((res, rej) => {
+  const r = new FileReader();
+  r.onload = () => res(r.result.split(',')[1]);
+  r.onerror = () => rej(new Error('Could not read file'));
+  r.readAsDataURL(file);
+});
+
+async function collect(form) {
+  const data = {
+    'Form type': activeForm === 'internal' ? 'Internal' : 'External',
+    'Submitted at': new Date().toISOString()
+  };
+  // Every named control becomes one column; hidden questions are sent blank
+  form.querySelectorAll('[name]').forEach(el => {
+    const name = el.name;
+    if (!(name in data)) data[name] = '';
+    if (!isShown(el) || el.type === 'file') return;
+    if (el.type === 'radio' || el.type === 'checkbox') {
+      if (el.checked) data[name] = data[name] ? data[name] + '; ' + el.value : el.value;
+    } else {
+      data[name] = el.value.trim();
+    }
+  });
+  delete data['FE other ranked'];
+
+  const files = [];
+  for (const el of form.querySelectorAll('input[type=file]')) {
+    if (isShown(el) && el.files[0]) {
+      const f = el.files[0];
+      data[el.name] = f.name;
+      files.push({ field: el.name, name: f.name, type: f.type, content: await toBase64(f) });
+    }
+  }
+  return { fields: data, files };
+}
+
+async function submitForm() {
+  const form = formEl();
+  const stepEl = form.querySelector('.step.active');
+  if (!validateStep(stepEl)) return;
+
+  const errBox = stepEl.querySelector('.submit-error');
+  const btn = stepEl.querySelector('[data-submit]');
+  errBox.classList.remove('visible');
+
+  const payload = await collect(form);
+
+  if (!SUBMIT_URL) {
+    console.log('Preview payload:', payload);
+    showSuccess(true);
+    return;
+  }
+
+  const original = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="animation:spin 1s linear infinite"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg> Sending…';
+
+  try {
+    const res = await fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (!res.ok) throw new Error('Status ' + res.status);
+    showSuccess(false);
+  } catch (err) {
+    console.error(err);
+    errBox.innerHTML = 'The application wasn\'t sent. Check your internet connection and press <strong>Send application</strong> again. If it still doesn\'t work, email <strong>sixthform@liskeard.net</strong>.';
+    errBox.classList.add('visible');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = original;
+  }
+}
+
+function showSuccess(isPreview) {
+  formEl().hidden = true;
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('successMsg').textContent = activeForm === 'internal'
+    ? 'Thank you. The Sixth Form team will be in touch about your course choices.'
+    : 'Thank you for applying to Liskeard Sixth Form. The Sixth Form team will be in touch using the contact details you gave.';
+  document.getElementById('successPreview').hidden = !isPreview;
+  document.getElementById('successScreen').classList.add('visible');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   START
+═══════════════════════════════════════════════════════════ */
+buildYesNo();
+buildAcks();
+buildCourses();
+buildContacts();
+wireLinks();
+document.querySelectorAll('.app-form').forEach(wireForm);
+document.querySelectorAll('.app-form').forEach(wireCourseSlots);
+wireRanking();
+wireContacts();
+document.getElementById('previewBanner').hidden = !!SUBMIT_URL;
+
+// Direct links: index.html#internal or index.html#external
+function route() {
+  const start = location.hash.replace('#', '');
+  if (FORMS[start]) { if (activeForm !== start) showForm(start); }
+  else if (activeForm) showChooser();
+}
+window.addEventListener('hashchange', route);
+const initial = location.hash.replace('#', '');
+if (FORMS[initial]) showForm(initial); else showChooser();
+</script>
+</body>
+</html>
