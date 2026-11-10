@@ -1208,7 +1208,7 @@ input[type="file"] {
         <div class="section-body">
           <div class="info-box" style="margin-bottom:22px">
             <span class="icon">ℹ️</span>
-            <span>Please tell us which courses you're currently interested in studying at Sixth Form. Your final, formal options form will be submitted as part of the February options process.</span>
+            <span>Please tell us which courses you're currently interested in studying at Sixth Form. Your course choices will be confirmed on GCSE results day.</span>
           </div>
           <div class="field-row">
             <div class="field">
@@ -1455,7 +1455,6 @@ input[type="file"] {
 
           <div class="sub-heading" style="margin-top:0">Emergency consent</div>
           <div class="field">
-            <!-- WORDING TO BE CONFIRMED BY LISKEARD -->
             <div class="ack" data-name="Medical emergency consent" data-req data-err="This consent is required to apply">In an emergency, if a contact can't be reached, I consent to the school seeking any medical treatment the applicant needs.</div>
           </div>
 
@@ -1548,7 +1547,7 @@ input[type="file"] {
           <div class="sub-heading">Course choices</div>
           <div class="info-box" style="margin-bottom:18px">
             <span class="icon">ℹ️</span>
-            <span>These choices are an initial expression of interest. The courses that will be running are confirmed in March, when final decisions are made.</span>
+            <span>These choices are an initial expression of interest. Your course choices will be confirmed on GCSE results day.</span>
           </div>
           <div class="field-row">
             <div class="field">
@@ -1821,7 +1820,7 @@ input[type="file"] {
       <h3>Questions?</h3>
       <ol style="list-style:none;padding-left:0">
         <li>Email <strong>sixthform@liskeard.net</strong></li>
-        <li>Call <strong>01579 342344</strong></li>
+        <li>Call <strong>01579 325733</strong></li>
       </ol>
     </div>
     <p style="margin-top:24px"><button type="button" class="btn btn-secondary" onclick="showChooser()">Back to start</button></p>
@@ -1844,34 +1843,29 @@ input[type="file"] {
 const SUBMIT_URL = 'https://defaultf7dea264d7cb4f3098e12edb2278df.64.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/04/workflows/bb12e1d9150444a0a1fab2d8e5fa57b6/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=tmu9-2fh-AiZc-WhRfoK7xyqofDX_AvzxF_I_QiGHZg';
 
 // Courses shown in every Option / Back-up dropdown on both forms.
-// Taken from the Liskeard Sixth Form course list (check against the current prospectus).
+// Matches the Liskeard Sixth Form prospectus, 2027 entry.
 // A line starting with "---" becomes a non-selectable group heading.
 const COURSES = [
   "--- A Levels ---",
-  "Art and Design", "Biology", "Business", "Chemistry", "Drama and Theatre Studies",
-  "English Language", "English Literature", "Environmental Science", "French",
-  "Further Mathematics", "Geography", "History", "Mathematics", "Media Studies",
-  "Music", "Philosophy and Ethics (RS)", "Photography", "Physical Education",
-  "Physics", "Product Design", "Psychology", "Spanish", "Textiles",
-  "--- Alternative Level 3 courses ---",
-  "Applied Science – Extended Certificate (BTEC)",
-  "Core Maths – Level 3 Mathematical Studies",
-  "Sport – Extended Certificate (OCR Cambridge Technical)",
-  "Sport – Diploma (OCR Cambridge Technical) (2 courses)",
-  "Health and Social Care – Diploma (BTEC) (2 courses)"
+  "Art & Design", "Biology", "Business", "Chemistry", "Drama & Theatre",
+  "English Language", "English Literature", "French", "Geography", "History",
+  "Mathematics", "Media Studies", "Music", "Philosophy & Ethics", "Photography",
+  "Physical Education", "Physics", "Politics", "Product Design", "Psychology",
+  "Spanish", "Textiles",
+  "--- Other Level 3 courses ---",
+  "Applied Science – OCR Level 3 Extended Certificate",
+  "Criminology – WJEC Level 3 Applied Diploma",
+  "Health & Social Care – Cambridge OCR Level 3",
+  "Mathematical Studies – Level 3 Certificate (Core Maths)",
+  "Sport – OCR Cambridge Technical Level 3"
 ];
 
-// Courses that take up more than one of the three option slots
-const COURSE_SLOTS = {
-  "Sport – Diploma (OCR Cambridge Technical) (2 courses)": 2,
-  "Health and Social Care – Diploma (BTEC) (2 courses)": 2
-};
+// Courses that take up more than one of the three option slots.
+// Add a line like  "Course name exactly as above (2 courses)": 2  if one is a double.
+const COURSE_SLOTS = {};
 
 // Combinations the prospectus rules out (checked across Options 1–3)
-const COURSE_RULES = [
-  { test: c => c.includes("Further Mathematics") && !c.includes("Mathematics"),
-    msg: "Further Mathematics must be taken alongside Mathematics" }
-];
+const COURSE_RULES = [];
 
 const FORMS = {
   internal: { title: 'Internal application 2027–28', steps: ['You', 'Courses', 'Plans'] },
@@ -1886,7 +1880,7 @@ const MAX_FILE_MB = 5;
 const LINKS = {
   aup:        'https://www.smart-trust.net/attachments/download.asp?file=452&type=pdf',  // Acceptable Use Policy (internet access question)
   studentAup: 'https://www.smart-trust.net/attachments/download.asp?file=452&type=pdf',  // Student Acceptable Use Policy (parent and student agreements)
-  homeSchool: '',                                                                       // Home School Agreement — add Liskeard's link
+  homeSchool: 'https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fwww.liskeard.net%2F_site%2Fdata%2Ffiles%2Fteaching_learning%2Fbehaviour_rewards%2FP5-_Home_School_Agreement.docx&wdOrigin=BROWSELINK',  // Home School Agreement (Behaviour & Rewards page)
   biometric:  'https://www.smart-trust.net/attachments/download.asp?file=502&type=pdf'   // Biometric Data Policy on the SMART website
 };
 
